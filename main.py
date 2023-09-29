@@ -1,4 +1,7 @@
 from enum import Enum
+from pydantic import BaseModel
+from datetime import datetime
+from datetime import date 
 from fastapi import FastAPI, Form, Request, HTTPException
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
@@ -34,18 +37,18 @@ except Exception as ex:
 #     Jueves = 'Jueves'
 #     Viernes = 'Viernes'
 
-def convertir_fecha_formato(fecha_texto):
-    try:
-        # Intenta convertir la fecha en formato DD-MMMM-YYYY a YYYY-MM-DD
-        fecha_obj = datetime.strptime(fecha_texto, "%d-%B-%Y")
-        return fecha_obj.date()
-    except ValueError:
-        return None
+# def convertir_fecha_formato(fecha_texto):
+#     try:
+#         # Intenta convertir la fecha en formato DD-MMMM-YYYY a YYYY-MM-DD
+#         fecha_obj = datetime.strptime(fecha_texto, "%d-%B-%Y")
+#         return fecha_obj.date()
+#     except ValueError:
+#         return None
     
-def calcular_edad(fecha_nacimiento):
-    today = datetime.today()
-    age = today.year - fecha_nacimiento.year - ((today.month, today.day) < (fecha_nacimiento.month, fecha_nacimiento.day))
-    return age
+# def calcular_edad(fecha_nacimiento):
+#     today = date.today()
+#     age = today.year - fecha_nacimiento.year - ((today.month, today.day) < (fecha_nacimiento.month, fecha_nacimiento.day))
+#     return age
 #Formulario html
 @app.get("/registrar_estudiantes", response_class=HTMLResponse)
 async def show_registration_form(request: Request):
@@ -87,11 +90,7 @@ def registrar_estudiantes(
     try:
         cursor = connection.cursor()
 
-        fecha_de_inicio = convertir_fecha_formato(fecha_de_inicio)
-        if fecha_de_inicio is None:
-            return {"error":"Formato de fecha incorrecto"}
-        
-        Edad = calcular_edad(Fecha_nacimiento)
+       
 
         sql = """
         INSERT INTO registros_estudiantes (Número_Recibo, Número_cuenta, Nombre_y_Apellido_estudiante, dni, Fecha_nacimiento, Edad, Dirección, Barrio, Celular, Teléfono, Mail, Curso, Día, Hora_de_Curso, Fecha_de_inicio, Vendedor, Ciudad, Plan, Forma_de_pago, Valor_cuotas, Cantidad_de_cuotas, Valor_certificado, Abona_matricula, Abona_cuota_1, Abona_cuota_2, Abona_certificado)
@@ -116,6 +115,22 @@ def get_estudiantes():
         return {"estudiantes": estudiantes}
     except Exception as ex:
         return {"error": f"Error al obtener datos de estudiantes: {ex}"}
+
+class DatosEntrada(BaseModel):
+    fecha_nacimiento: datetime
+
+@app.post("/calcular-edad")
+async def calcular_edad(datos: DatosEntrada):
+    fecha_nacimiento = datos.fecha_nacimiento
+    fecha_actual = date.today()  # Usamos date.today() para obtener la fecha actual sin hora
+    edad = fecha_actual.year - fecha_nacimiento.year - ((fecha_actual.month, fecha_actual.day) < (fecha_nacimiento.month, fecha_nacimiento.day))
+    return {"edad": edad}
+
+ # fecha_de_inicio = convertir_fecha_formato(fecha_de_inicio)
+        # if fecha_de_inicio is None:
+        #     return {"error":"Formato de fecha incorrecto"}
+        
+        # Edad = calcular_edad(Fecha_nacimiento)
     
 
 @app.get ("/users",response_class=HTMLResponse)
