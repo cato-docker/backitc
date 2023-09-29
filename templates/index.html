@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Registros de estudiantes</title>
+</head>
+
+<body>
+    <h1>Formulario de registros de estudiantes</h1>
+    <form action="/registrar_estudiantes" method="post">
+        <label for="Número_recibo">Número de Recibo:</label>
+        <input type="number" name="Número_recibo" required><br>
+        <label for="Número_cuenta">Número de cuenta:</label>
+        <input type="number" name="Número_cuenta" required><br>
+        <label for="Nombre_y_Apellido_estudiante">Nombre y Apellido</label>
+        <input type="text" name="Nombre_y_Apellido_estudiante" required><br>
+        <label for="dni">DNI:</label>
+        <input type="text" name="dni" required>
+        <label for="Fecha_nacimiento">Fecha de nacimiento:</label>
+        <input type="date" name="Fecha_nacimiento" required><br>
+        <label for="Edad">Edad:</label>
+        <input type="number" name="Edad"><br>
+        <label for="Dirección">Dirección:</label>
+        <input type="text" name="Dirección"><br>
+        <label for="Barrio">Barrio:</label>
+        <input type="text" name="Barrio"><br>
+        <label for="Celular">Celular:</label>
+        <input type="text" name="Celular" required><br>
+        <label for="Teléfono">Teléfono:</label>
+        <input type="text" name="Teléfono"><br>
+        <label for="Mail">E-mail:</label>
+        <input type="text" name="Mail"><br>
+        <label for="Día">Día de cursada:</label>
+        <select name="Día" id="Día">{% for option in enum_values%}
+            <option value="{{option}}">{{option}}</option>
+            {%endfor %}
+        </select>
+        <label for="Hora_de_Curso">Horario de cursada:</label>
+        <select name="Hora_de_Curso" id="Hora_de_Curso">{%for option in enum_values%}<option value="{{option}}">
+                {{option}}</option>{%endfor %}</select>
+        <label for="Fecha_de_inicio">Fecha de inicio:</label>
+        <input type="date" name="Fecha_de_inicio"><br>
+        <label for="Vendedor">Vendedor</label>
+        <input type="text" name="Vendedor"><br>
+        <label for="Ciudad">Ciudad</label>
+        <input type="text" name="Ciudad"><br>
+        <label for="Plan">Plan elegido:</label>
+        <input type="text" name="Plan"><br>
+        <label for="Forma_de_pago">Forma de pago:</label>
+        <select name="Forma_de_pago" id="Forma_de_pago">{%for option in enum_values%}<option value="{{option}}">
+                {{option}}</option>{%endfor %}</select>
+        <label for="Valor_cuotas">Valor de cuotas:</label>
+        <input type="number" name="Valor_cuotas"><br>
+        <label for="Cantidad_de_cuotas">Cantidad de cuotas:</label>
+        <input type="number" name="Cantidad_de_cuotas"><br>
+        <label for="Valor_certificado">Valor del certificado:</label>
+        <input type="number" name="Valor_certificado"><br>
+        <label for="Abona_matricula">Paga matricula:</label>
+        <input type="number" name="Abona_matricula"><br>
+        <label for="Abona_cuota_1">Paga cuota N°1:</label>
+        <input type="number" name="Abona_cuota_1"><br>
+        <label for="Abona_cuota_2">Paga cuota N°2:</label>
+        <input type="number" name="Abona_cuota_2"><br>
+        <label for="Abona_certificado">Paga certificado:</label>
+        <input type="number" name="Abona_certificado"><br>
+        <input type="submit" value="Cargar">
+    </form>
+
+</body>
+
+</html>
