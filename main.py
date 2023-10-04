@@ -140,10 +140,10 @@ async def show_registration_form(request: Request):
 
 #Validar usuarios
 @app.post("/users")
-def show_users(
+async def show_users(
     
-    Usuario: str = Form(None),
-    Passwords: str = Form(None)
+    Usuario: str = Form(),
+    Passwords: str = Form()
 ):
     if not Usuario or not Passwords:
         return templates.TemplateResponse("inicio_sesion.html",{"request":Request})
