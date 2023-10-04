@@ -20,7 +20,7 @@
         <label for="dni">DNI:</label>
         <input type="text" name="dni" required>
         <label for="Fecha_nacimiento">Fecha de nacimiento:</label>
-        <input type="date" id="Fecha_nacimiento" name="Fecha_nacimiento" required><br>
+        <input type="datetime-local" id="Fecha_nacimiento" name="Fecha_nacimiento" required><br>
         <label for="Edad">Edad:</label>
         <input type="number" name="Edad"><br>
         <label for="Dirección">Dirección:</label>
@@ -33,8 +33,21 @@
         <input type="text" name="Teléfono"><br>
         <label for="Mail">E-mail:</label>
         <input type="text" name="Mail"><br>
+        <label for="Curso">Curso:</label>
+        <select name="Curso" id="Curso">
+            <option value="">Selecciona un curso</option>
+            <option value="Administración de Pymes">Administración de Pymes</option>
+            <option value="Secretariado Ejecutivo">Secretariado Ejecutivo</option>
+            <option value="Diseño Gráfico">Diseño Gráfico</option>
+            <option value="Diseño Técnico">Diseño Técnico</option>
+            <option value="Marketing Digital">Marketing Digital</option>
+            <option value="Robótica">Robótica</option>
+            <option value="Diagnostico y Mantenimiento de PC">Diagnostico y Mantenimiento de PC</option>
+
+        </select>
         <label for="Día">Día de cursada:</label>
         <select name="Día" id="Día">
+            <option value="">Selecciona un día</option>
             <option value= "Lunes">Lunes</option>
             <option value= "Martes">Martes</option>
             <option value= "Miércoles">Miércoles</option>
@@ -43,6 +56,7 @@
         </select>
         <label for="Hora_de_Curso">Horario de cursada:</label>
         <select name="Hora_de_Curso" id="Hora_de_Curso">
+            <option value="">Selecciona un horario</option>
             <option value= "10:00 a 11:30hs">10:00 a 11:30hs</option>
             <option value= "12:30 a 14:00hs">12:30 a 14:00hs</option>
             <option value= "14:00 a 15:30hs">14:00 a 15:30hs</option>
@@ -52,7 +66,7 @@
             <option value= "21:00 a 22:30hs">21:00 a 22:30hs</option>
         </select>
         <label for="Fecha_de_inicio">Fecha de inicio:</label>
-        <input type="date" name="Fecha_de_inicio"><br>
+        <input type="datetime-local" name="Fecha_de_inicio"><br>
         <label for="Vendedor">Vendedor</label>
         <input type="text" name="Vendedor"><br>
         <label for="Ciudad">Ciudad</label>
@@ -85,6 +99,7 @@
         <input type="number" name="Abona_certificado"><br>
         <input type="submit" value="Cargar">
     </form>
+
 
 </body>
 
