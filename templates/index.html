@@ -20,7 +20,7 @@
         <label for="dni">DNI:</label>
         <input type="text" name="dni" required>
         <label for="Fecha_nacimiento">Fecha de nacimiento:</label>
-        <input type="date" name="Fecha_nacimiento" required><br>
+        <input type="date" id="Fecha_nacimiento" name="Fecha_nacimiento" required><br>
         <label for="Edad">Edad:</label>
         <input type="number" name="Edad"><br>
         <label for="Dirección">Dirección:</label>
@@ -34,13 +34,23 @@
         <label for="Mail">E-mail:</label>
         <input type="text" name="Mail"><br>
         <label for="Día">Día de cursada:</label>
-        <select name="Día" id="Día">{% for option in enum_values%}
-            <option value="{{option}}">{{option}}</option>
-            {%endfor %}
+        <select name="Día" id="Día">
+            <option value= "Lunes">Lunes</option>
+            <option value= "Martes">Martes</option>
+            <option value= "Miércoles">Miércoles</option>
+            <option value= "Jueves">Jueves</option>
+            <option value= "Viernes">Viernes</option>
         </select>
         <label for="Hora_de_Curso">Horario de cursada:</label>
-        <select name="Hora_de_Curso" id="Hora_de_Curso">{%for option in enum_values%}<option value="{{option}}">
-                {{option}}</option>{%endfor %}</select>
+        <select name="Hora_de_Curso" id="Hora_de_Curso">
+            <option value= "10:00 a 11:30hs">10:00 a 11:30hs</option>
+            <option value= "12:30 a 14:00hs">12:30 a 14:00hs</option>
+            <option value= "14:00 a 15:30hs">14:00 a 15:30hs</option>
+            <option value= "15:30 a 17:00hs">15:30 a 17:00hs</option>
+            <option value= "18:00 a 19:30hs">18:00 a 19:30hs</option>
+            <option value= "19:30 a 21:00hs">19:30 a 21:00hs</option>
+            <option value= "21:00 a 22:30hs">21:00 a 22:30hs</option>
+        </select>
         <label for="Fecha_de_inicio">Fecha de inicio:</label>
         <input type="date" name="Fecha_de_inicio"><br>
         <label for="Vendedor">Vendedor</label>
@@ -50,8 +60,15 @@
         <label for="Plan">Plan elegido:</label>
         <input type="text" name="Plan"><br>
         <label for="Forma_de_pago">Forma de pago:</label>
-        <select name="Forma_de_pago" id="Forma_de_pago">{%for option in enum_values%}<option value="{{option}}">
-                {{option}}</option>{%endfor %}</select>
+        <select name="Forma_de_pago" id="Forma_de_pago">
+            <option value="Efectivo">Efectivo</option>
+            <option value="Mercado pago">Mercado pago</option>
+            <option value="Transferencia">Transferencia</option>
+            <option value="Tarjeta de credito">Tarjeta de credito</option>
+            <option value="Tarjeta de debito">Tarjeta de debito</option>
+
+               
+        </select>
         <label for="Valor_cuotas">Valor de cuotas:</label>
         <input type="number" name="Valor_cuotas"><br>
         <label for="Cantidad_de_cuotas">Cantidad de cuotas:</label>

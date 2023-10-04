@@ -135,8 +135,8 @@ async def calcular_edad(datos: DatosEntrada):
 
 @app.get ("/users",response_class=HTMLResponse)
 async def show_registration_form(request: Request):
-    extensions = request.extensions
-    return templates.TemplateResponse("inicio_sesion.html",{"request": request, "extensions": extensions})
+    #extensions = request.extensions
+    return templates.TemplateResponse("inicio_sesion.html",{"request": request})
 
 #Validar usuarios
 @app.post("/users")
