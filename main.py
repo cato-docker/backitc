@@ -152,7 +152,7 @@ def validar_users(
         user = cursor.fetchone()
 
         if user and user["passwords"] == Passwords:
-            return RedirectResponse("/registrar_estudiantes")
+            return "acceso concedido"
         else:
             raise HTTPException(status_code=401, detail="Credenciales incorrectas")
     except Exception as ex:
