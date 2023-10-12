@@ -8,6 +8,9 @@ from fastapi.responses import RedirectResponse
 from fastapi.responses import HTMLResponse
 from datetime import datetime
 import mysql.connector
+import requests
+from fastapi import FastAPI
+
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
@@ -18,7 +21,7 @@ configuracion_db = {
     'host': 'localhost',
     'user': 'root',
     'password': 'CmDmEmFm95',
-    'database': 'registros_estudiantes_itc'  # Nombre de la base de datos corregido
+    'database': 'registros_estudiantes_itc'  
 }
 
 try:
@@ -30,33 +33,43 @@ try:
 except Exception as ex:
     print(ex)
 
-# class DiasSemana(str,Enum):
-#     Lunes = 'Lunes'
-#     Martes = 'Martes'
-#     Miercoles = 'Miércoles'
-#     Jueves = 'Jueves'
-#     Viernes = 'Viernes'
 
-# def convertir_fecha_formato(fecha_texto):
-#     try:
-#         # Intenta convertir la fecha en formato DD-MMMM-YYYY a YYYY-MM-DD
-#         fecha_obj = datetime.strptime(fecha_texto, "%d-%B-%Y")
-#         return fecha_obj.date()
-#     except ValueError:
-#         return None
     
-# def calcular_edad(fecha_nacimiento):
-#     today = date.today()
-#     age = today.year - fecha_nacimiento.year - ((today.month, today.day) < (fecha_nacimiento.month, fecha_nacimiento.day))
-#     return age
-#Formulario html
-@app.get("/registrar_estudiantes", response_class=HTMLResponse)
-async def show_registration_form(request: Request):
-    return templates.TemplateResponse("index.html",{"request": request})
 
+#Formulario html
 @app.get("/")
 def index():
     return {"Mensaje": "Bienvenidos"}
+
+#Validacion de DNI
+def validar_dni(dni):
+    url = f"https://informes.nosis.com/{dni}"
+    response = requests.get(url)
+
+    if "DNI VALIDO" in response.text:
+        return True
+    else:
+        return False
+@app.post("/validar_dni")
+async def validar_dni_endpoint(dni: str = Form(...)):
+    # Llama a la función de validación de DNI
+    es_valido = validar_dni(dni)
+
+    # Si el DNI es válido, devuelve un mensaje de éxito
+    if es_valido:
+        return {"mensaje": "El DNI es válido"}
+    else:
+        # Si el DNI no es válido, puedes levantar una excepción HTTP
+        raise HTTPException(status_code=400, detail="El DNI no es válido")
+
+@app.get("/registrar_estudiantes", response_class=HTMLResponse)
+async def show_registration_form(request: Request, success: bool =None):
+
+    if success:
+        return templates.TemplateResponse("index.html",{"request": request})
+    else:
+        return templates.TemplateResponse("index.html", {"request": request, "success": False})
+
 
 @app.post("/registrar_estudiantes")
 def registrar_estudiantes(
@@ -102,9 +115,12 @@ def registrar_estudiantes(
         cursor.execute(sql, registros_estudiantes)
         connection.commit()
 
-        return {"Mensaje": "Datos de estudiantes ingresados correctamente"}
+        #return {"Mensaje": "Datos de estudiantes ingresados correctamente"}
+        return RedirectResponse("/registrar_estudiantes")
+    
     except Exception as ex:
         return {"error": f"Error al querer insertar datos en registros de estudiantes: {ex}"}
+    
 
 @app.get("/estudiantes")
 def get_estudiantes():
@@ -116,55 +132,28 @@ def get_estudiantes():
     except Exception as ex:
         return {"error": f"Error al obtener datos de estudiantes: {ex}"}
 
-class DatosEntrada(BaseModel):
-    fecha_nacimiento: datetime
 
-@app.post("/calcular-edad")
-async def calcular_edad(datos: DatosEntrada):
-    fecha_nacimiento = datos.fecha_nacimiento
-    fecha_actual = date.today()  # Usamos date.today() para obtener la fecha actual sin hora
-    edad = fecha_actual.year - fecha_nacimiento.year - ((fecha_actual.month, fecha_actual.day) < (fecha_nacimiento.month, fecha_nacimiento.day))
-    return {"edad": edad}
 
- # fecha_de_inicio = convertir_fecha_formato(fecha_de_inicio)
-        # if fecha_de_inicio is None:
-        #     return {"error":"Formato de fecha incorrecto"}
-        
-        # Edad = calcular_edad(Fecha_nacimiento)
-    
+@app.get("/users", response_class=HTMLResponse)
+def get_users(request: Request):
+    return templates.TemplateResponse("inicio_sesion.html", {"request": request})
 
-@app.get ("/users",response_class=HTMLResponse)
-async def show_registration_form(request: Request):
-    #extensions = request.extensions
-    return templates.TemplateResponse("inicio_sesion.html",{"request": request})
-
-#Validar usuarios
 @app.post("/users")
-async def show_users(
-    
-    Usuario: str = Form(),
+def validar_users(
+    Usuarios: str = Form(),
     Passwords: str = Form()
 ):
-    if not Usuario or not Passwords:
-        return templates.TemplateResponse("inicio_sesion.html",{"request":Request})
+    if not Usuarios or not Passwords:
+        return templates.TemplateResponse("inicio_sesion.html", {"request": Request})
     try:
         cursor = connection.cursor(dictionary=True)
         query = "SELECT nombre_usuarios, passwords FROM usuarios WHERE nombre_usuarios = %s"
-        cursor.execute(query, (Usuario,))
+        cursor.execute(query, (Usuarios,))  
         user = cursor.fetchone()
 
         if user and user["passwords"] == Passwords:
             return RedirectResponse("/registrar_estudiantes")
         else:
-             raise HTTPException(status_code=401, detail="Credenciales incorrectas")
-    
+            raise HTTPException(status_code=401, detail="Credenciales incorrectas")
     except Exception as ex:
-        raise HTTPException(status_code=500, detail=f"Error al autenticar usuario: {ex}")
-
-
-        
-    
-        
-    
-
-
+        raise HTTPException(status_code=500, detail=f"Error al autenticar credenciales: {ex}")

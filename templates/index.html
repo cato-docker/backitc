@@ -5,22 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+
     <title>Registros de estudiantes</title>
 </head>
 
 <body>
-    <h1>Formulario de registros de estudiantes</h1>
+    <h1>Registros de estudiantes</h1>
     <form action="/registrar_estudiantes" method="post">
         <label for="Número_recibo">Número de Recibo:</label>
-        <input type="number" name="Número_recibo" required><br>
+        <input type="number" name="Número_recibo" ><br>
         <label for="Número_cuenta">Número de cuenta:</label>
-        <input type="number" name="Número_cuenta" required><br>
+        <input type="number" name="Número_cuenta" ><br>
         <label for="Nombre_y_Apellido_estudiante">Nombre y Apellido</label>
-        <input type="text" name="Nombre_y_Apellido_estudiante" required><br>
+        <input type="text" name="Nombre_y_Apellido_estudiante" ><br>
         <label for="dni">DNI:</label>
-        <input type="text" name="dni" required>
+        <input type="text" name="dni" >
         <label for="Fecha_nacimiento">Fecha de nacimiento:</label>
-        <input type="datetime-local" id="Fecha_nacimiento" name="Fecha_nacimiento" required><br>
+        <input type="datetime-local" id="Fecha_nacimiento" name="Fecha_nacimiento" ><br>
         <label for="Edad">Edad:</label>
         <input type="number" name="Edad"><br>
         <label for="Dirección">Dirección:</label>
@@ -28,7 +29,7 @@
         <label for="Barrio">Barrio:</label>
         <input type="text" name="Barrio"><br>
         <label for="Celular">Celular:</label>
-        <input type="text" name="Celular" required><br>
+        <input type="text" name="Celular" ><br>
         <label for="Teléfono">Teléfono:</label>
         <input type="text" name="Teléfono"><br>
         <label for="Mail">E-mail:</label>
@@ -75,6 +76,7 @@
         <input type="text" name="Plan"><br>
         <label for="Forma_de_pago">Forma de pago:</label>
         <select name="Forma_de_pago" id="Forma_de_pago">
+            <option value="Seleciona una forma de pago">Seleciona una forma de pago</option>
             <option value="Efectivo">Efectivo</option>
             <option value="Mercado pago">Mercado pago</option>
             <option value="Transferencia">Transferencia</option>
@@ -98,7 +100,11 @@
         <label for="Abona_certificado">Paga certificado:</label>
         <input type="number" name="Abona_certificado"><br>
         <input type="submit" value="Cargar">
+        <input type="button" onclick="window.open('https://informes.nosis.com/', '_blank');" value="Validar DNI">
+
     </form>
+    
+
 
 
 </body>
