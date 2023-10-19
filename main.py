@@ -7,10 +7,13 @@ import requests
 from fastapi import FastAPI, Form, Request, HTTPException
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
+from fastapi.responses import JSONResponse
 from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
+app.mount("/templates",StaticFiles(directory="templates"),name="style")
 
 # Conexión a la base de datos MySQL
 db_config = {
@@ -31,10 +34,7 @@ except Exception as ex:
 @app.get("/")
 def index():
     return {"Mensaje": "Bienvenidos"}
-
-@app.post("/prueba")
-def app_prueba():
-    return {"Mensaje":"Acceso concedido."}
+    
 
 # Validación de DNI
 def validar_dni(dni):
@@ -53,39 +53,68 @@ async def validar_dni_endpoint(dni: str = Form(...)):
 @app.get("/registrar_estudiantes", response_class=HTMLResponse)
 async def show_registration_form(request: Request, success: bool = None):
     if success:
-        return templates.TemplateResponse("index.html", {"request": request})
+        return templates.TemplateResponse("index.html", {"request": request, "success": True})
     else:
         return templates.TemplateResponse("index.html", {"request": request, "success": False})
 
+class EstudiantesCreate(BaseModel):
+    numero_recibo: int
+    numero_cuenta: int
+    nombre_apellido_estudiante: str
+    dni: str
+    fecha_nacimiento: datetime
+    edad: int
+    direccion: str
+    barrio: str
+    celular: str
+    telefono: str
+    mail: str
+    curso: str
+    dia: str
+    hora_de_curso: str
+    fecha_de_inicio: datetime
+    vendedor: str
+    ciudad: str
+    plan: str
+    forma_de_pago: str
+    valor_cuotas: str
+    cantidad_de_cuotas: int
+    valor_certificado: float
+    abona_matricula: float
+    abona_cuota_1: float
+    abona_cuota_2: float
+    abona_certificado: float
+
+
 @app.post("/registrar_estudiantes")
-def registrar_estudiantes(
-    numero_recibo: int = Form(),
-    numero_cuenta: int = Form(),
-    nombre_apellido_estudiante: str = Form(),
-    dni: int = Form(),
-    fecha_nacimiento: datetime = Form(),
-    edad: int = Form(),
-    direccion: str = Form(),
-    barrio: str = Form(),
-    celular: str = Form(),
-    telefono: str = Form(),
-    mail: str = Form(),
-    curso: str = Form(),
-    dia: str = Form(),
-    hora_de_curso: str = Form(),
-    fecha_de_inicio: datetime = Form(),
-    vendedor: str = Form(),
-    ciudad: str = Form(),
-    plan: str = Form(),
-    forma_de_pago: str = Form(),
-    valor_cuotas: str = Form(),
-    cantidad_de_cuotas: int = Form(),
-    valor_certificado: float = Form(),
-    abona_matricula: float = Form(),
-    abona_cuota_1: float = Form(),
-    abona_cuota_2: float = Form(),
-    abona_certificado: float = Form()
-):
+def registrar_estudiantes(estudiante: EstudiantesCreate):
+    numero_recibo = estudiante.numero_recibo
+    numero_cuenta = estudiante.numero_cuenta
+    nombre_apellido_estudiante = estudiante.nombre_apellido_estudiante
+    dni = estudiante.dni
+    fecha_nacimiento = estudiante.fecha_nacimiento
+    edad = estudiante.edad
+    direccion = estudiante.direccion
+    barrio = estudiante.barrio
+    celular = estudiante.celular
+    telefono = estudiante.telefono
+    mail = estudiante.mail
+    curso = estudiante.curso
+    dia = estudiante.dia
+    hora_de_curso = estudiante.hora_de_curso
+    fecha_de_inicio = estudiante.fecha_de_inicio
+    vendedor = estudiante.vendedor
+    ciudad = estudiante.ciudad
+    plan = estudiante.plan
+    forma_de_pago = estudiante.forma_de_pago
+    valor_cuotas = estudiante.valor_cuotas
+    cantidad_de_cuotas = estudiante.cantidad_de_cuotas
+    valor_certificado = estudiante.valor_certificado
+    abona_matricula = estudiante.abona_matricula
+    abona_cuota_1 = estudiante.abona_cuota_1
+    abona_cuota_2 = estudiante.abona_cuota_2
+    abona_certificado = estudiante.abona_certificado
+        
     try:
         cursor = connection.cursor()
 
@@ -114,7 +143,8 @@ def registrar_estudiantes(
 def get_estudiantes():
     try:
         cursor = connection.cursor(dictionary=True)
-        cursor.execute("SELECT * FROM registros_estudiantes")
+        cursor.execute("SELECT Número_cuenta, Nombre_y_Apellido_estudiante, Plan, Valor_cuotas  FROM registros_estudiantes WHERE Plan = 'Financiado'"
+        "GROUP BY Número_cuenta,Nombre_y_Apellido_estudiante,Plan, Valor_cuotas;")
         estudiantes = cursor.fetchall()
         return {"estudiantes": estudiantes}
     except mysql.connector.Error as ex:
@@ -127,11 +157,13 @@ def get_users(request: Request):
 #Validación de usuarios
 @app.post("/users")
 def validar_users(
-    usuarios: str = Form(),
-    passwords: str = Form()
+    usuarios: str = Form(...),  # El uso de ... indica que el campo es requerido
+    passwords: str = Form(...)
 ):
+    
     if not usuarios or not passwords:
-        return templates.TemplateResponse("inicio_sesion.html", {"request": Request})
+        raise HTTPException(status_code=400, detail="Usuario y contraseña son requeridos")
+
     try:
         cursor = connection.cursor(dictionary=True)
         query = "SELECT nombre_usuarios, passwords FROM usuarios WHERE nombre_usuarios = %s"
@@ -139,7 +171,8 @@ def validar_users(
         user = cursor.fetchone()
 
         if user and user["passwords"] == passwords:
-            return "acceso concedido"
+            return RedirectResponse ("/registrar_estudiantes?success=True")
+            #return JSONResponse({"message": "Acceso concedido", "redirect": "/registrar_estudiantes"})
         else:
             raise HTTPException(status_code=401, detail="Credenciales incorrectas")
     except mysql.connector.Error as ex:

@@ -1,14 +1,19 @@
 
 
 body{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     background-color: #0056b3;
+}
+h1{
+    text-align: center;
 }
 
 
 form {
-    max-width: 400px;
+    max-width: 400;
     margin: 0 auto;
     padding: 20px;
+
 }
 
 label {
@@ -37,7 +42,19 @@ input[type="submit"] {
     padding: 10px 20px;
     cursor: pointer;
 }
+input[type="button"]{
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding:10px 20px ;
+    cursor: pointer;
 
+}
+
+input[type="button"]:hover{
+    background-color:#0056b3;
+
+}
 input[type="submit"]:hover {
     background-color: #0056b3;
 }

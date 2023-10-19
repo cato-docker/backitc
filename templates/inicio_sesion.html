@@ -7,12 +7,13 @@
 </head>
 <body>
     <h1>Iniciar sesión</h1>
-    <form action="/prueba" method="post">
-        <label for="Usuarios">Usuario:</label>
-        <input type="text" name="Usuarios" required><br>
-        <label for="Passwords">Contraseña:</label> 
-        <input type="password" name="Passwords" required><br> 
+    <form action="/users" method="post" enctype="application/x-www-form-urlencoded">
+        <label for="usuarios">Usuario:</label>
+        <input type="text" name="usuarios" required><br>
+        <label for="passwords">Contraseña:</label> 
+        <input type="password" name="passwords" required><br> 
         <input type="submit" value="Iniciar sesión">
     </form>
+    
 </body>
 </html>

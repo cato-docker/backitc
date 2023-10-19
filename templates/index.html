@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet"type="text/css" href="templates/style.css">
 
     <title>Registros de estudiantes</title>
 </head>
@@ -100,7 +100,10 @@
         <label for="Abona_certificado">Paga certificado:</label>
         <input type="number" name="Abona_certificado"><br>
         <input type="submit" value="Cargar">
+        <div>
         <input type="button" onclick="window.open('https://informes.nosis.com/', '_blank');" value="Validar DNI">
+        </div>
+        <input type="button" onclick="window.open('/estudiantes');" value="Mostrar estudiantes cargados">
 
     </form>
     
