@@ -15,6 +15,12 @@ app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 app.mount("/templates",StaticFiles(directory="templates"),name="style")
 
+def calcular_edad(fecha_nacimiento):
+    fecha_actual = datetime.now()
+    edad = fecha_actual.year - fecha_nacimiento.year -((fecha_actual.month, fecha_actual.day)<(fecha_nacimiento.moth, fecha_nacimiento.day))
+    return edad
+
+
 # Conexión a la base de datos MySQL
 db_config = {
     'host': 'localhost',
@@ -137,6 +143,7 @@ def registrar_estudiantes(estudiante: EstudiantesCreate):
 
     except mysql.connector.Error as ex:
         return {"error": f"Error al querer insertar datos en registros de estudiantes: {ex}"}
+    
 
 #Muestra los estudiantes cargados
 @app.get("/estudiantes")
@@ -172,8 +179,11 @@ def validar_users(
 
         if user and user["passwords"] == passwords:
             return RedirectResponse ("/registrar_estudiantes?success=True")
-            #return JSONResponse({"message": "Acceso concedido", "redirect": "/registrar_estudiantes"})
+            #return JSONResponse({"mensaje":"Acceso concedido":"redirect":"/registrar_estudiantes"})
         else:
             raise HTTPException(status_code=401, detail="Credenciales incorrectas")
     except mysql.connector.Error as ex:
         raise HTTPException(status_code=500, detail=f"Error al autenticar credenciales: {ex}")
+    
+   
+    

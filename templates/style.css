@@ -1,16 +1,18 @@
 
 
 body{
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    background-color: #0056b3;
+    font-family: 'Roboto';
+    
+    background-color: #3d34c0;
 }
 h1{
     text-align: center;
+    
 }
 
 
 form {
-    max-width: 400;
+    max-width: 400 px;
     margin: 0 auto;
     padding: 20px;
 
