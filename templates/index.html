@@ -6,57 +6,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet"type="text/css" href="templates/style.css">
 
+
     <title>Registros de estudiantes</title>
 </head>
 
 <body>
     <h1>Registros de estudiantes</h1>
-    <form action="/registrar_estudiantes" method="post">
+    <form action="/registrar_estudiantes" method="post" enctype="multipart/form-data" id="formulario">
         <label for="Número_recibo">Número de Recibo:</label>
         <input type="number" name="Número_recibo" ><br>
         <label for="Número_cuenta">Número de cuenta:</label>
         <input type="number" name="Número_cuenta" ><br>
-        <label for="Nombre_y_Apellido_estudiante">Nombre y Apellido</label>
-        <input type="text" name="Nombre_y_Apellido_estudiante" ><br>
+        <label for="nombre_y_apellido_estudiante">Nombre y Apellido</label>
+        <input type="text" name="nombre_y_apellido_estudiante" ><br>
         <label for="dni">DNI:</label>
         <input type="text" name="dni" >
-        <label for="Fecha_nacimiento">Fecha de nacimiento:</label>
-        <input type="datetime-local" id="Fecha_nacimiento" name="Fecha_nacimiento" ><br>
-        <label for="Edad">Edad:</label>
-        <input type="number" name="Edad"><br>
-        <label for="Dirección">Dirección:</label>
-        <input type="text" name="Dirección"><br>
-        <label for="Barrio">Barrio:</label>
-        <input type="text" name="Barrio"><br>
-        <label for="Celular">Celular:</label>
-        <input type="text" name="Celular" ><br>
-        <label for="Teléfono">Teléfono:</label>
-        <input type="text" name="Teléfono"><br>
-        <label for="Mail">E-mail:</label>
-        <input type="text" name="Mail"><br>
-        <label for="Curso">Curso:</label>
-        <select name="Curso" id="Curso">
+        <label for="fecha_nacimiento">Fecha de nacimiento:</label>
+        <input type="datetime-local" id="fecha_nacimiento" name="fecha_nacimiento" ><br>
+        <label for="edad">Edad:</label>
+        <input type="number" name="edad"><br>
+        <label for="dirección">Dirección:</label>
+        <input type="text" name="dirección"><br>
+        <label for="barrio">Barrio:</label>
+        <input type="text" name="barrio"><br>
+        <label for="celular">Celular:</label>
+        <input type="text" name="celular" ><br>
+        <label for="teléfono">Teléfono:</label>
+        <input type="text" name="teléfono"><br>
+        <label for="mail">E-mail:</label>
+        <input type="text" name="mail"><br>
+        <label for="curso">Curso:</label>
+        <select name="curso" id="Curso">
             <option value="">Selecciona un curso</option>
-            <option value="Administración de Pymes">Administración de Pymes</option>
+            <option value="Administracion de Pymes">Administración de Pymes</option>
             <option value="Secretariado Ejecutivo">Secretariado Ejecutivo</option>
-            <option value="Diseño Gráfico">Diseño Gráfico</option>
-            <option value="Diseño Técnico">Diseño Técnico</option>
+            <option value="Diseño Grafico">Diseño Gráfico</option>
+            <option value="Diseño Tecnico">Diseño Técnico</option>
             <option value="Marketing Digital">Marketing Digital</option>
-            <option value="Robótica">Robótica</option>
+            <option value="Robotica">Robótica</option>
             <option value="Diagnostico y Mantenimiento de PC">Diagnostico y Mantenimiento de PC</option>
 
         </select>
-        <label for="Día">Día de cursada:</label>
-        <select name="Día" id="Día">
+        <label for="dáa">Día de cursada:</label>
+        <select name="día" id="día">
             <option value="">Selecciona un día</option>
             <option value= "Lunes">Lunes</option>
             <option value= "Martes">Martes</option>
-            <option value= "Miércoles">Miércoles</option>
+            <option value= "Miercoles">Miércoles</option>
             <option value= "Jueves">Jueves</option>
             <option value= "Viernes">Viernes</option>
         </select>
-        <label for="Hora_de_Curso">Horario de cursada:</label>
-        <select name="Hora_de_Curso" id="Hora_de_Curso">
+        <label for="hora_de_curso">Horario de cursada:</label>
+        <select name="hora_de_curso" id="hora_de_curso">
             <option value="">Selecciona un horario</option>
             <option value= "10:00 a 11:30hs">10:00 a 11:30hs</option>
             <option value= "12:30 a 14:00hs">12:30 a 14:00hs</option>
@@ -66,16 +67,16 @@
             <option value= "19:30 a 21:00hs">19:30 a 21:00hs</option>
             <option value= "21:00 a 22:30hs">21:00 a 22:30hs</option>
         </select>
-        <label for="Fecha_de_inicio">Fecha de inicio:</label>
-        <input type="datetime-local" name="Fecha_de_inicio"><br>
-        <label for="Vendedor">Vendedor</label>
-        <input type="text" name="Vendedor"><br>
-        <label for="Ciudad">Ciudad</label>
-        <input type="text" name="Ciudad"><br>
-        <label for="Plan">Plan elegido:</label>
-        <input type="text" name="Plan"><br>
-        <label for="Forma_de_pago">Forma de pago:</label>
-        <select name="Forma_de_pago" id="Forma_de_pago">
+        <label for="fecha_de_inicio">Fecha de inicio:</label>
+        <input type="datetime-local" name="fecha_de_inicio"><br>
+        <label for="vendedor">Vendedor</label>
+        <input type="text" name="vendedor"><br>
+        <label for="ciudad">Ciudad</label>
+        <input type="text" name="ciudad"><br>
+        <label for="plan">Plan elegido:</label>
+        <input type="text" name="plan"><br>
+        <label for="forma_de_pago">Forma de pago:</label>
+        <select name="forma_de_pago" id="forma_de_pago">
             <option value="Seleciona una forma de pago">Seleciona una forma de pago</option>
             <option value="Efectivo">Efectivo</option>
             <option value="Mercado pago">Mercado pago</option>
@@ -85,20 +86,20 @@
 
                
         </select>
-        <label for="Valor_cuotas">Valor de cuotas:</label>
-        <input type="number" name="Valor_cuotas"><br>
-        <label for="Cantidad_de_cuotas">Cantidad de cuotas:</label>
-        <input type="number" name="Cantidad_de_cuotas"><br>
-        <label for="Valor_certificado">Valor del certificado:</label>
-        <input type="number" name="Valor_certificado"><br>
-        <label for="Abona_matricula">Paga matricula:</label>
-        <input type="number" name="Abona_matricula"><br>
-        <label for="Abona_cuota_1">Paga cuota N°1:</label>
-        <input type="number" name="Abona_cuota_1"><br>
-        <label for="Abona_cuota_2">Paga cuota N°2:</label>
-        <input type="number" name="Abona_cuota_2"><br>
-        <label for="Abona_certificado">Paga certificado:</label>
-        <input type="number" name="Abona_certificado"><br>
+        <label for="valor_cuotas">Valor de cuotas:</label>
+        <input type="number" name="valor_cuotas"><br>
+        <label for="cantidad_de_cuotas">Cantidad de cuotas:</label>
+        <input type="number" name="cantidad_de_cuotas"><br>
+        <label for="valor_certificado">Valor del certificado:</label>
+        <input type="number" name="valor_certificado"><br>
+        <label for="abona_matricula">Paga matricula:</label>
+        <input type="number" name="abona_matricula"><br>
+        <label for="abona_cuota_1">Paga cuota N°1:</label>
+        <input type="number" name="abona_cuota_1"><br>
+        <label for="abona_cuota_2">Paga cuota N°2:</label>
+        <input type="number" name="abona_cuota_2"><br>
+        <label for="abona_certificado">Paga certificado:</label>
+        <input type="number" name="abona_certificado"><br>
         <input type="submit" value="Cargar">
         <div>
         <input type="button" onclick="window.open('https://informes.nosis.com/', '_blank');" value="Validar DNI">
@@ -109,7 +110,7 @@
    
     
 
-
+    <script src="/scripts/scripts.js"></script>
 
 </body>
 

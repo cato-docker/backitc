@@ -8,12 +8,14 @@
 </head>
 <body>
     <h1>Iniciar sesión</h1>
-    <form action="/users" method="post" enctype="application/x-www-form-urlencoded">
+    <form action="/users" method="POST" enctype="application/x-www-form-urlencoded">
         <label for="usuarios">Usuario:</label>
-        <input type="text" name="usuarios" required><br>
+        <input type="text" name="usuarios" minlength="4" required ><br>
         <label for="passwords">Contraseña:</label> 
-        <input type="password" name="passwords" required><br> 
+        <input type="password" name="passwords" minlength="4" required><br> 
         <input type="submit" value="Iniciar sesión">
+        
+    
     </form>
     
 </body>

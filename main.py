@@ -4,12 +4,14 @@ from datetime import datetime
 from datetime import date
 import mysql.connector
 import requests
+import pdb
 from fastapi import FastAPI, Form, Request, HTTPException
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
 from fastapi.responses import JSONResponse
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
+
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
@@ -19,7 +21,6 @@ def calcular_edad(fecha_nacimiento):
     fecha_actual = datetime.now()
     edad = fecha_actual.year - fecha_nacimiento.year -((fecha_actual.month, fecha_actual.day)<(fecha_nacimiento.moth, fecha_nacimiento.day))
     return edad
-
 
 # Conexión a la base de datos MySQL
 db_config = {
@@ -60,78 +61,111 @@ async def validar_dni_endpoint(dni: str = Form(...)):
 async def show_registration_form(request: Request, success: bool = None):
     if success:
         return templates.TemplateResponse("index.html", {"request": request, "success": True})
+        #mensaje = "datos cargados exitosamente"
     else:
         return templates.TemplateResponse("index.html", {"request": request, "success": False})
+        #None
+    #return templates.TemplateResponse("index.html", {"request": request, "success_message": mensaje})
 
-class EstudiantesCreate(BaseModel):
-    numero_recibo: int
-    numero_cuenta: int
-    nombre_apellido_estudiante: str
-    dni: str
-    fecha_nacimiento: datetime
-    edad: int
-    direccion: str
-    barrio: str
-    celular: str
-    telefono: str
-    mail: str
-    curso: str
-    dia: str
-    hora_de_curso: str
-    fecha_de_inicio: datetime
-    vendedor: str
-    ciudad: str
-    plan: str
-    forma_de_pago: str
-    valor_cuotas: str
-    cantidad_de_cuotas: int
-    valor_certificado: float
-    abona_matricula: float
-    abona_cuota_1: float
-    abona_cuota_2: float
-    abona_certificado: float
+# class EstudiantesCreate(BaseModel):
+#     numero_recibo: int
+#     numero_cuenta: int
+#     nombre_apellido_estudiante: str
+#     dni: str
+#     fecha_nacimiento: datetime
+#     edad: int
+#     direccion: str
+#     barrio: str
+#     celular: str
+#     telefono: str
+#     mail: str
+#     curso: str
+#     dia: str
+#     hora_de_curso: str
+#     fecha_de_inicio: datetime
+#     vendedor: str
+#     ciudad: str
+#     plan: str
+#     forma_de_pago: str
+#     valor_cuotas: str
+#     cantidad_de_cuotas: int
+#     valor_certificado: int
+#     abona_matricula: int
+#     abona_cuota_1: int
+#     abona_cuota_2: int
+#     abona_certificado: int
 
 
 @app.post("/registrar_estudiantes")
-def registrar_estudiantes(estudiante: EstudiantesCreate):
-    numero_recibo = estudiante.numero_recibo
-    numero_cuenta = estudiante.numero_cuenta
-    nombre_apellido_estudiante = estudiante.nombre_apellido_estudiante
-    dni = estudiante.dni
-    fecha_nacimiento = estudiante.fecha_nacimiento
-    edad = estudiante.edad
-    direccion = estudiante.direccion
-    barrio = estudiante.barrio
-    celular = estudiante.celular
-    telefono = estudiante.telefono
-    mail = estudiante.mail
-    curso = estudiante.curso
-    dia = estudiante.dia
-    hora_de_curso = estudiante.hora_de_curso
-    fecha_de_inicio = estudiante.fecha_de_inicio
-    vendedor = estudiante.vendedor
-    ciudad = estudiante.ciudad
-    plan = estudiante.plan
-    forma_de_pago = estudiante.forma_de_pago
-    valor_cuotas = estudiante.valor_cuotas
-    cantidad_de_cuotas = estudiante.cantidad_de_cuotas
-    valor_certificado = estudiante.valor_certificado
-    abona_matricula = estudiante.abona_matricula
-    abona_cuota_1 = estudiante.abona_cuota_1
-    abona_cuota_2 = estudiante.abona_cuota_2
-    abona_certificado = estudiante.abona_certificado
-        
+def registrar_estudiantes(
+    
+    # numero_recibo = estudiantes.numero_recibo
+    # numero_cuenta = estudiantes.numero_cuenta
+    # nombre_apellido_estudiante = estudiantes.nombre_apellido_estudiante
+    # dni = estudiantes.dni
+    # fecha_nacimiento = estudiantes.fecha_nacimiento
+    # edad = estudiantes.edad
+    # direccion = estudiantes.direccion
+    # barrio = estudiantes.barrio
+    # celular = estudiantes.celular
+    # telefono = estudiantes.telefono
+    # mail = estudiantes.mail
+    # curso = estudiantes.curso
+    # dia = estudiantes.dia
+    # hora_de_curso = estudiantes.hora_de_curso
+    # fecha_de_inicio = estudiantes.fecha_de_inicio
+    # vendedor = estudiantes.vendedor
+    # ciudad = estudiantes.ciudad
+    # plan = estudiantes.plan
+    # forma_de_pago = estudiantes.forma_de_pago
+    # valor_cuotas = estudiantes.valor_cuotas
+    # cantidad_de_cuotas = estudiantes.cantidad_de_cuotas
+    # valor_certificado = estudiantes.valor_certificado
+    # abona_matricula = estudiantes.abona_matricula
+    # abona_cuota_1 = estudiantes.abona_cuota_1
+    # abona_cuota_2 = estudiantes.abona_cuota_2
+    # abona_certificado = estudiantes.abona_certificado
+    # @app.post("/registrar_estudiantes")
+
+    Número_recibo: int = Form(...),
+    Número_cuenta: int = Form(...),
+    nombre_y_apellido_estudiante: str = Form(...),
+    dni: str = Form(...),
+    fecha_nacimiento: datetime = Form(...),
+    edad: int = Form(...),
+    dirección: str = Form(...),
+    barrio: str = Form(...),
+    celular: str = Form(...),
+    teléfono: str = Form(...),
+    mail: str = Form(...),
+    curso: str = Form(...),
+    día: str = Form(...),
+    hora_de_curso: str = Form(...),
+    fecha_de_inicio: datetime = Form(...),
+    vendedor: str = Form(...),
+    ciudad: str = Form(...),
+    plan: str = Form(...),
+    forma_de_pago: str = Form(...),
+    valor_cuotas: int = Form(...),
+    cantidad_de_cuotas: int = Form(...),
+    valor_certificado: int = Form(...),
+    abona_matricula: int = Form(...),
+    abona_cuota_1: int = Form(...),
+    abona_cuota_2: int = Form(...),
+    abona_certificado: int = Form(...)
+):
+
     try:
         cursor = connection.cursor()
 
         sql = """
-        INSERT INTO registros_estudiantes (Numero_Recibo, Numero_cuenta, Nombre_y_Apellido_estudiante, dni, Fecha_nacimiento, Edad, Direccion, Barrio, Celular, Telefono, Mail, Curso, Dia, Hora_de_Curso, Fecha_de_inicio, Vendedor, Ciudad, Plan, Forma_de_pago, Valor_cuotas, Cantidad_de_cuotas, Valor_certificado, Abona_matricula, Abona_cuota_1, Abona_cuota_2, Abona_certificado)
+        INSERT INTO registros_estudiantes (Número_recibo, Número_cuenta, Nombre_y_Apellido_estudiante, dni, Fecha_nacimiento, Edad, Dirección, Barrio, Celular, Teléfono, Mail, Curso, Día, Hora_de_Curso, Fecha_de_inicio, Vendedor, Ciudad, Plan, Forma_de_pago, Valor_cuotas, Cantidad_de_cuotas, Valor_certificado, Abona_matricula, Abona_cuota_1, Abona_cuota_2, Abona_certificado)
         VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
         """
 
         registros_estudiantes = (
-            numero_recibo, numero_cuenta, nombre_apellido_estudiante, dni, fecha_nacimiento, edad, direccion,
-            barrio, celular, telefono, mail, curso, dia, hora_de_curso, fecha_de_inicio, vendedor, ciudad, plan,
+            Número_recibo, Número_cuenta, nombre_y_apellido_estudiante, dni, fecha_nacimiento, edad, dirección,
+            barrio, celular, teléfono, mail, curso, día, hora_de_curso, fecha_de_inicio, vendedor, ciudad, plan,
             forma_de_pago, valor_cuotas, cantidad_de_cuotas, valor_certificado, abona_matricula, abona_cuota_1,
             abona_cuota_2, abona_certificado
         )
@@ -139,10 +173,13 @@ def registrar_estudiantes(estudiante: EstudiantesCreate):
         cursor.execute(sql, registros_estudiantes)
         connection.commit()
 
+        #return {"mensaje": "Estudiante registrado exitosamente"}
         return RedirectResponse("/registrar_estudiantes")
 
     except mysql.connector.Error as ex:
         return {"error": f"Error al querer insertar datos en registros de estudiantes: {ex}"}
+
+
     
 
 #Muestra los estudiantes cargados
@@ -164,12 +201,22 @@ def get_users(request: Request):
 #Validación de usuarios
 @app.post("/users")
 def validar_users(
-    usuarios: str = Form(...),  # El uso de ... indica que el campo es requerido
-    passwords: str = Form(...)
-):
+    usuarios: str = Form(),  passwords: str = Form()):
+    #pdb.set_trace()
+    
+   
+
+    if usuarios == ""  or passwords == "":
+        return {"Mensaje":"Usuario y/o contraseña estan vacios"}
+    # if usuarios == 'cato' and passwords == 'cat2015':
+    #     return RedirectResponse("/registrar_estudiantes?success=True")
+    
+    
+    
     
     if not usuarios or not passwords:
         raise HTTPException(status_code=400, detail="Usuario y contraseña son requeridos")
+        #return {"mensaje":"Usuario y contraseña son requeridos"}
 
     try:
         cursor = connection.cursor(dictionary=True)
@@ -178,8 +225,10 @@ def validar_users(
         user = cursor.fetchone()
 
         if user and user["passwords"] == passwords:
-            return RedirectResponse ("/registrar_estudiantes?success=True")
-            #return JSONResponse({"mensaje":"Acceso concedido":"redirect":"/registrar_estudiantes"})
+            #print("Redirigiendo a: /registrar_estudiantes")
+            return RedirectResponse ("/registrar_estudiantes") # liena problematica
+            #return JSONResponse({"mensaje": "Acceso concedido", "redirect": "/registrar_estudiantes"})
+
         else:
             raise HTTPException(status_code=401, detail="Credenciales incorrectas")
     except mysql.connector.Error as ex:
